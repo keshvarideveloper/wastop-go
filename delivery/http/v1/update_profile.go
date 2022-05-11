@@ -2,31 +2,40 @@ package v1
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/keshvarideveloper/wastop/adapter/store"
 	"github.com/keshvarideveloper/wastop/contract"
 	"github.com/keshvarideveloper/wastop/dto"
-	"github.com/keshvarideveloper/wastop/interactor/auth"
+	"github.com/keshvarideveloper/wastop/interactor/user"
 	"github.com/labstack/echo/v4"
 )
 
-func SignUpUser(store store.MySQLStore, validator contract.ValidateSignupUser) echo.HandlerFunc {
+func UpdateProfile(store store.MySQLStore, validator contract.ValidateUpdateProfile) echo.HandlerFunc {
 	return func(c echo.Context) error {
+		idStr := c.Param("id")
+		userID, err := strconv.Atoi(idStr)
 
-		var req = dto.SignupUserRequest{}
+		if err != nil {
+			return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+		}
+		var req = dto.UpdateProfileRequest{}
+
 		if err := c.Bind(&req); err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 		}
 
-		if err := validator(req); err != nil {
+		req.ID = uint(userID)
+		if err := validator(c.Request().Context(), req); err != nil {
 			return echo.NewHTTPError(http.StatusUnprocessableEntity, err.Error())
 		}
 
-		resp, err := auth.New(store).SignupUser(c.Request().Context(), req)
+		resp, err := user.New(store).UpdateProfile(c.Request().Context(), req)
 		if err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
 
 		return c.JSON(http.StatusOK, resp)
+
 	}
 }

@@ -7,6 +7,6 @@ import (
 )
 
 type UserInteractor interface {
-	SignUpUser(context.Context, dto.CreateUserRequest) (dto.CreateUserResponse, error)
-	UpdateUser(context.Context, dto.UpdateUserRequest) (dto.UpdateUserResponse, error)
+	UpdateProfile(context.Context, dto.UpdateProfileRequest) (dto.UpdateUserResponse, error)
+	GetProfile(context.Context, dto.GetProfileRequest) (dto.GetProfileResponse, error)
 }

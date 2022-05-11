@@ -6,7 +6,7 @@ import (
 	"github.com/keshvarideveloper/wastop/dto"
 )
 
-func ValidateCreateUser(req dto.CreateUserRequest) error {
+func ValidateCreateUser(req dto.SignupUserRequest) error {
 	return validation.ValidateStruct(&req,
 		validation.Field(&req.FullName,
 			validation.Required,

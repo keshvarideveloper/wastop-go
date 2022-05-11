@@ -2,27 +2,31 @@ package v1
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/keshvarideveloper/wastop/adapter/store"
 	"github.com/keshvarideveloper/wastop/contract"
 	"github.com/keshvarideveloper/wastop/dto"
-	"github.com/keshvarideveloper/wastop/interactor/auth"
+	"github.com/keshvarideveloper/wastop/interactor/user"
 	"github.com/labstack/echo/v4"
 )
 
-func SignUpUser(store store.MySQLStore, validator contract.ValidateSignupUser) echo.HandlerFunc {
+func FindUser(store store.MySQLStore, validator contract.ValidateGetProfile) echo.HandlerFunc {
 	return func(c echo.Context) error {
-
-		var req = dto.SignupUserRequest{}
-		if err := c.Bind(&req); err != nil {
+		idStr := c.Param("id")
+		userID, err := strconv.Atoi(idStr)
+		if err != nil {
 			return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 		}
 
-		if err := validator(req); err != nil {
+		var req = dto.GetProfileRequest{ID: uint(userID)}
+
+		if err := validator(c.Request().Context(), req); err != nil {
 			return echo.NewHTTPError(http.StatusUnprocessableEntity, err.Error())
 		}
 
-		resp, err := auth.New(store).SignupUser(c.Request().Context(), req)
+		resp, err := user.New(store).GetProfile(c.Request().Context(), req)
+
 		if err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}

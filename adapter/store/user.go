@@ -21,3 +21,21 @@ func (m MySQLStore) UpdateUser(ctx context.Context, user entity.User) (entity.Us
 	}
 	return mapToUserEntity(u), nil
 }
+
+func (m MySQLStore) GetUserById(ctx context.Context, userID uint) (entity.User, error) {
+	user := User{}
+	if err := m.db.WithContext(ctx).Where("id = ?", userID).First(&user).Error; err != nil {
+		return entity.User{}, err
+	}
+
+	return mapToUserEntity(user), nil
+}
+
+func (m MySQLStore) GetUserByEmail(ctx context.Context, email string) (entity.User, error) {
+	user := User{}
+	if err := m.db.WithContext(ctx).Where("email = ?", email).First(&user).Error; err != nil {
+		return entity.User{}, err
+	}
+
+	return mapToUserEntity(user), nil
+}

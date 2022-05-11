@@ -1,9 +1,13 @@
 package contract
 
 import (
+	"context"
+
 	"github.com/keshvarideveloper/wastop/dto"
 )
 
 type (
-	ValidateCreateUser func(req dto.CreateUserRequest) error
+	ValidateSignupUser    func(req dto.SignupUserRequest) error
+	ValidateUpdateProfile func(ctx context.Context, req dto.UpdateProfileRequest) error
+	ValidateGetProfile    func(ctx context.Context, req dto.GetProfileRequest) error
 )

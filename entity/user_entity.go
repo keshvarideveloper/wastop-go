@@ -10,3 +10,10 @@ type User struct {
 	Bio      string `json:"bio"`
 	Status   string `json:"status"`
 }
+
+// User Status
+const (
+	Completed  string = "completed"
+	Suspended         = "suspended"
+	Registered        = "registered"
+)
