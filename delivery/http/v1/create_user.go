@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func SignUpUser(store store.MySQLStore, validator contract.ValidateSignupUser) echo.HandlerFunc {
+func SignupUser(store store.MySQLStore, validator contract.ValidateSignupUser) echo.HandlerFunc {
 	return func(c echo.Context) error {
 
 		var req = dto.SignupUserRequest{}

@@ -17,8 +17,11 @@ func main() {
 
 	// add routes
 
-	e.POST("/users", v1.SignUpUser(mysqlStore,
+	e.POST("/users", v1.SignupUser(mysqlStore,
 		validator.ValidateCreateUser))
+	e.POST("/auth", v1.LoginUser(mysqlStore))
+
+	e.GET("/users/:id", v1.GetProfile(mysqlStore))
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

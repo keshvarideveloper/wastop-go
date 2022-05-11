@@ -1,6 +1,8 @@
 package dto
 
-import "github.com/keshvarideveloper/wastop/entity"
+import (
+	"github.com/keshvarideveloper/wastop/entity"
+)
 
 type LoginUserWithEmailRequest struct {
 	Email    string `json:"email"`
@@ -8,8 +10,7 @@ type LoginUserWithEmailRequest struct {
 }
 
 type LoginUserWithEmailResponse struct {
-	AccessToken  string `json:"accessToken"`
-	RefreshToken string `json:"refreshToken"`
+	AccessToken string `json:"accessToken"`
 }
 type SignupUserRequest struct {
 	FullName string `json:"fullName"`

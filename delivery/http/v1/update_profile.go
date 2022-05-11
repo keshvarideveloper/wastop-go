@@ -7,7 +7,7 @@ import (
 	"github.com/keshvarideveloper/wastop/adapter/store"
 	"github.com/keshvarideveloper/wastop/contract"
 	"github.com/keshvarideveloper/wastop/dto"
-	"github.com/keshvarideveloper/wastop/interactor/user"
+	user "github.com/keshvarideveloper/wastop/interactor/users"
 	"github.com/labstack/echo/v4"
 )
 
